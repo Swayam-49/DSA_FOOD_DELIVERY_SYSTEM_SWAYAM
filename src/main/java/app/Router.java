@@ -16,7 +16,8 @@ import java.util.*;
 import model.*;
 
 /**
- * Handles HTTP request routing for serving static files and processing JSON API requests.
+ * Handles HTTP request routing for serving static files and processing JSON API
+ * requests.
  */
 public class Router implements HttpHandler {
 
@@ -60,7 +61,8 @@ public class Router implements HttpHandler {
 
         File file = new File("frontend" + path);
         if (!file.exists() || file.isDirectory()) {
-            // Fallback: if user refreshes on an HTML path without extension, serve index.html or redirect
+            // Fallback: if user refreshes on an HTML path without extension, serve
+            // index.html or redirect
             sendError(exchange, 404, "File Not Found: " + path);
             return;
         }
@@ -87,7 +89,7 @@ public class Router implements HttpHandler {
         byte[] bytes = Files.readAllBytes(file.toPath());
         exchange.getResponseHeaders().set("Content-Type", contentType);
         exchange.sendResponseHeaders(200, bytes.length);
-        
+
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(bytes);
         }
@@ -208,7 +210,7 @@ public class Router implements HttpHandler {
     private void processLogin(HttpExchange exchange) throws IOException {
         String body = readRequestBody(exchange);
         JsonObject json = JsonParser.parseString(body).getAsJsonObject();
-        
+
         String username = json.get("username").getAsString().trim().toLowerCase();
         String password = json.get("password").getAsString();
         String role = json.get("role").getAsString();
@@ -240,8 +242,9 @@ public class Router implements HttpHandler {
             if (match != null) {
                 resultList.add(match);
             } else {
-                // Fallback prefix search: if binary search fails to find exact match, 
-                // we can do a quick linear search for matching substring to make search user-friendly!
+                // Fallback prefix search: if binary search fails to find exact match,
+                // we can do a quick linear search for matching substring to make search
+                // user-friendly!
                 for (Restaurant r : DataStore.restaurants) {
                     if (r.getName().toLowerCase().contains(search.toLowerCase())) {
                         resultList.add(r);
@@ -398,7 +401,7 @@ public class Router implements HttpHandler {
 
         double subtotal = cart.getTotalPrice();
         double discount = 0;
-        
+
         if (!couponCode.isEmpty() && DataStore.coupons.containsKey(couponCode)) {
             DataStore.Coupon cp = DataStore.coupons.get(couponCode);
             discount = subtotal * cp.getDiscountPercentage();
@@ -406,19 +409,19 @@ public class Router implements HttpHandler {
                 discount = cp.getMaxDiscount();
             }
         }
-        
+
         double finalPrice = subtotal - discount;
         int orderId = DataStore.getNextOrderId();
 
-        Order order = new Order(orderId, customer.getId(), cart.getRestaurantId(), 
-                                cart.getItems(), subtotal, couponCode, discount, finalPrice);
-        
+        Order order = new Order(orderId, customer.getId(), cart.getRestaurantId(),
+                cart.getItems(), subtotal, couponCode, discount, finalPrice);
+
         // Add to Datastore
         synchronized (DataStore.orders) {
             DataStore.orders.add(order);
         }
-        
-        // Put in customer's order history stack (LIFO)
+
+        // Put in customer's order history
         customer.getOrderHistory().push(order);
 
         // Put in pending queue
@@ -571,7 +574,8 @@ public class Router implements HttpHandler {
                     List<DeliveryPartner> partners = DataStore.getAllDeliveryPartners();
                     DeliveryPartner dp = DeliveryManager.assignPartner(o, partners);
                     if (dp != null) {
-                        System.out.println("[Delivery Assignment] Auto-assigned Order #" + o.getOrderId() + " to " + dp.getName());
+                        System.out.println(
+                                "[Delivery Assignment] Auto-assigned Order #" + o.getOrderId() + " to " + dp.getName());
                         break; // assigned one, break to let PQ handle order-by-order
                     }
                 }

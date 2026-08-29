@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <!-- Custom style -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="bg-light">
 
     <!-- Dynamically Loaded Navbar -->
@@ -17,7 +19,7 @@
     <main class="container my-5 flex-grow-1 d-flex align-items-center justify-content-center">
         <div class="row w-100 justify-content-center">
             <div class="col-md-6 col-lg-5 col-xl-4">
-                
+
                 <div class="text-center mb-4">
                     <h3 class="fw-bold">Welcome Back</h3>
                     <p class="text-secondary small">Access your QuickBites portal using your role credentials</p>
@@ -27,16 +29,20 @@
                     <!-- Role Switcher Tabs -->
                     <ul class="nav nav-pills nav-fill mb-4 p-1 bg-light rounded-3" id="roleTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active small py-2" data-bs-toggle="tab" data-bs-target="#login-tab" data-role="CUSTOMER">Customer</button>
+                            <button class="nav-link active small py-2" data-bs-toggle="tab" data-bs-target="#login-tab"
+                                data-role="CUSTOMER">Customer</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link small py-2" data-bs-toggle="tab" data-bs-target="#login-tab" data-role="RESTAURANT">Store</button>
+                            <button class="nav-link small py-2" data-bs-toggle="tab" data-bs-target="#login-tab"
+                                data-role="RESTAURANT">Store</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link small py-2" data-bs-toggle="tab" data-bs-target="#login-tab" data-role="DELIVERY">Rider</button>
+                            <button class="nav-link small py-2" data-bs-toggle="tab" data-bs-target="#login-tab"
+                                data-role="DELIVERY">Rider</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link small py-2" data-bs-toggle="tab" data-bs-target="#login-tab" data-role="ADMIN">Admin</button>
+                            <button class="nav-link small py-2" data-bs-toggle="tab" data-bs-target="#login-tab"
+                                data-role="ADMIN">Admin</button>
                         </li>
                     </ul>
 
@@ -45,11 +51,13 @@
                             <form id="login-form">
                                 <div class="mb-3">
                                     <label class="form-label small fw-bold">Username</label>
-                                    <input type="text" class="form-control py-2" id="login-username" placeholder="e.g. cust1, rest1, delivery1, admin" required>
+                                    <input type="text" class="form-control py-2" id="login-username"
+                                        placeholder="e.g. cust1, rest1, delivery1, admin" required>
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label small fw-bold">Password</label>
-                                    <input type="password" class="form-control py-2" id="login-password" value="password" required>
+                                    <input type="password" class="form-control py-2" id="login-password"
+                                        value="password" required>
                                 </div>
                                 <button type="submit" class="btn btn-accent w-100 py-2.5">Sign In</button>
                             </form>
@@ -75,7 +83,7 @@
     <!-- Footer -->
     <footer class="text-center py-4">
         <div class="container">
-            <p class="mb-0">&copy; 2026 QuickBites. College Project.</p>
+            <p class="mb-0">&copy; 2026 QuickBites. Food Delivery Project.</p>
         </div>
     </footer>
 
@@ -84,4 +92,5 @@
     <!-- Custom app JS -->
     <script src="js/app.js"></script>
 </body>
+
 </html>

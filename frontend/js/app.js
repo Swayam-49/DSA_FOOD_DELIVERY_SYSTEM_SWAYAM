@@ -3,7 +3,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     renderNavbar();
-    
+
     // Auto-run page-specific logic based on current page
     const pathname = window.location.pathname;
     if (pathname.endsWith("index.html") || pathname === "/") {
@@ -99,7 +99,7 @@ function renderNavbar() {
         `;
     }
 
-    const authButton = user 
+    const authButton = user
         ? `<div class="d-flex align-items-center gap-3">
              <span class="text-white opacity-75 small">Hi, <strong>${user.name || user.username}</strong> (${user.role})</span>
              <button class="btn btn-outline-light btn-sm px-3" onclick="logout()">Logout</button>
@@ -237,10 +237,10 @@ function initLoginPage() {
 
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        
+
         const username = document.getElementById("login-username").value;
         const password = document.getElementById("login-password").value;
-        
+
         // Active role tab selection
         const activeTabEl = document.querySelector("#roleTabs .nav-link.active");
         const role = activeTabEl.getAttribute("data-role");
@@ -250,26 +250,26 @@ function initLoginPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password, role })
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                setLoggedInUser(data.user);
-                
-                // Route to respective dashboards
-                if (role === "CUSTOMER") {
-                    window.location.href = "index.html";
-                } else if (role === "RESTAURANT" || role === "DELIVERY") {
-                    window.location.href = "dashboard.html";
-                } else if (role === "ADMIN") {
-                    window.location.href = "admin.html";
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    setLoggedInUser(data.user);
+
+                    // Route to respective dashboards
+                    if (role === "CUSTOMER") {
+                        window.location.href = "index.html";
+                    } else if (role === "RESTAURANT" || role === "DELIVERY") {
+                        window.location.href = "dashboard.html";
+                    } else if (role === "ADMIN") {
+                        window.location.href = "admin.html";
+                    }
+                } else {
+                    alert(data.message || "Login failed");
                 }
-            } else {
-                alert(data.message || "Login failed");
-            }
-        })
-        .catch(err => {
-            alert("Error during login request: " + err.message);
-        });
+            })
+            .catch(err => {
+                alert("Error during login request: " + err.message);
+            });
     });
 }
 
@@ -357,17 +357,17 @@ function addItemToCart(itemId, restaurantId) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.id, itemId, quantity: 1, restaurantId })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            updateCartBadge(user.id);
-            alert("Food item added to cart successfully!");
-        } else {
-            alert(data.message || "Failed to add to cart");
-        }
-    }).catch(err => {
-        console.error("Cart error:", err);
-    });
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                updateCartBadge(user.id);
+                alert("Food item added to cart successfully!");
+            } else {
+                alert(data.message || "Failed to add to cart");
+            }
+        }).catch(err => {
+            console.error("Cart error:", err);
+        });
 }
 
 // ==========================================
@@ -394,21 +394,21 @@ function initCartPage() {
     if (checkoutBtn) {
         checkoutBtn.addEventListener("click", () => {
             const couponCode = document.getElementById("coupon-code").value.trim();
-            
+
             fetch("/api/order/place", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId: user.id, couponCode })
             })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Order placed successfully!");
-                    window.location.href = "dashboard.html";
-                } else {
-                    alert(data.message || "Failed to place order");
-                }
-            }).catch(err => alert("Checkout error: " + err.message));
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Order placed successfully!");
+                        window.location.href = "dashboard.html";
+                    } else {
+                        alert(data.message || "Failed to place order");
+                    }
+                }).catch(err => alert("Checkout error: " + err.message));
         });
     }
 }
@@ -417,7 +417,7 @@ function loadCartDetails(userId) {
     const cartContainer = document.getElementById("cart-items-container");
     const summaryCard = document.getElementById("cart-summary-card");
     const couponInput = document.getElementById("coupon-code");
-    
+
     if (!cartContainer) return;
 
     fetch(`/api/cart?userId=${userId}`)
@@ -468,7 +468,7 @@ function loadCartDetails(userId) {
             const finalPrice = Math.max(0, subtotal - discount);
 
             document.getElementById("subtotal-val").innerText = `$${subtotal.toFixed(2)}`;
-            
+
             const discountRow = document.getElementById("discount-row");
             const discountVal = document.getElementById("discount-val");
             if (discount > 0) {
@@ -495,14 +495,14 @@ function changeQty(itemId, quantity) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.id, itemId, quantity })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            loadCartDetails(user.id);
-        } else {
-            alert(data.message || "Failed to update item quantity");
-        }
-    }).catch(err => console.error("Update quantity failed:", err));
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                loadCartDetails(user.id);
+            } else {
+                alert(data.message || "Failed to update item quantity");
+            }
+        }).catch(err => console.error("Update quantity failed:", err));
 }
 
 // ==========================================
@@ -538,7 +538,7 @@ function renderCustomerDashboard(container, user) {
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card-premium p-4">
-                    <h5 class="fw-bold mb-3">Customer Profile</h5>
+                    <h5 class="fw-bold mb-3">My Profile</h5>
                     <p class="mb-1"><strong>Name:</strong> ${user.name}</p>
                     <p class="mb-1"><strong>Phone:</strong> ${user.phone}</p>
                     <p class="mb-0"><strong>Address:</strong> ${user.address}</p>
@@ -552,7 +552,7 @@ function renderCustomerDashboard(container, user) {
                     </div>
                 </div>
                 <div class="card-premium p-4">
-                    <h5 class="fw-bold mb-3">Order History (LIFO Stack)</h5>
+                    <h5 class="fw-bold mb-3">Order History</h5>
                     <div id="customer-orders-history">
                         <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
                     </div>
@@ -586,7 +586,7 @@ function fetchOrdersAndRenderHistory(userId, role) {
                 if (activeOrder.status === "ACCEPTED_DELIVERY") step = 5;
                 if (activeOrder.status === "PICKED_UP") step = 6;
 
-                const partnerText = activeOrder.deliveryPartnerId !== -1 
+                const partnerText = activeOrder.deliveryPartnerId !== -1
                     ? `<div class="alert alert-info py-2 small mt-3">Delivery Partner ID: <strong>#${activeOrder.deliveryPartnerId}</strong> has been assigned.</div>`
                     : `<div class="alert alert-warning py-2 small mt-3">Waiting for delivery partner assignment...</div>`;
 
@@ -836,27 +836,27 @@ function updateStatus(orderId, nextStatus) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ orderId, status: nextStatus, userId: user.id })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            // Hot update local user object in session storage if rider status changes
-            if (user.role === "DELIVERY" && nextStatus === "DELIVERED") {
-                user.isAvailable = true;
-                user.currentOrderId = -1;
-                setLoggedInUser(user);
-            }
-            if (user.role === "DELIVERY" && nextStatus === "ACCEPTED_DELIVERY") {
-                user.isAvailable = false;
-                user.currentOrderId = orderId;
-                setLoggedInUser(user);
-            }
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Hot update local user object in session storage if rider status changes
+                if (user.role === "DELIVERY" && nextStatus === "DELIVERED") {
+                    user.isAvailable = true;
+                    user.currentOrderId = -1;
+                    setLoggedInUser(user);
+                }
+                if (user.role === "DELIVERY" && nextStatus === "ACCEPTED_DELIVERY") {
+                    user.isAvailable = false;
+                    user.currentOrderId = orderId;
+                    setLoggedInUser(user);
+                }
 
-            renderNavbar(); // Refresh badge
-            loadDashboardRoleContent(user);
-        } else {
-            alert(data.message || "Failed to update order status");
-        }
-    }).catch(err => alert("Error updating status: " + err.message));
+                renderNavbar(); // Refresh badge
+                loadDashboardRoleContent(user);
+            } else {
+                alert(data.message || "Failed to update order status");
+            }
+        }).catch(err => alert("Error updating status: " + err.message));
 }
 
 // ==========================================
