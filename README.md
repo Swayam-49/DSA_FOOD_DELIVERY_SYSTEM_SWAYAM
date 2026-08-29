@@ -1,6 +1,6 @@
 # QuickBites – Local Food Delivery System
 
-QuickBites is a complete, browser-based, light-weight local food delivery web application built from scratch in Java. This project was developed as a final academic project to demonstrate Object-Oriented Programming (OOP), Data Structures and Algorithms (DSA), and Clean Architecture principles without relying on enterprise frameworks (such as Spring Boot) or databases.
+QuickBites is a complete, browser-based, light-weight local food delivery web application built from scratch in Java. This project was developed as a final academic project to demonstrate Object-Oriented Programming (OOP), Data Structures and Algorithms (DSA), and Clean Architecture principles.
 
 ## 🚀 Key Features
 
